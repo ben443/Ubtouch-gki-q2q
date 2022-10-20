@@ -1,0 +1,11 @@
+q2q:
+  Names:
+    - q2q
+  PrettyName: Z Fold 3
+  DeviceType: tablet
+  SupportedOrientations:
+    - Portrait
+    - InvertedPortrait
+    - Landscape
+    - InvertedLandscape
+  PrimaryOrientation: Landscape
