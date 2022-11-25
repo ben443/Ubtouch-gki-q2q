@@ -66,18 +66,6 @@ cd "$TMPDOWN"
     [ -f halium-boot-ramdisk.img ] || curl --location --output halium-boot-ramdisk.img \
         "https://github.com/Halium/initramfs-tools-halium/releases/download/dynparts/initrd.img-touch-${RAMDISK_ARCH}"
 
-	# HACK: Copy ramdisk files
-	mkdir -p tmp/
-	mv halium-boot-ramdisk.img tmp/
-	cd tmp/
-	7z x halium-boot-ramdisk.img
-	7z x halium-boot-ramdisk
-	rm halium-boot-ramdisk*
-	cp -r $HERE/ramdisk-overlay/* .
-	find . | cpio -oc | gzip -q -9 -c >../halium-boot-ramdisk.img
-	cd ../
-	rm -rf tmp/
-
     if ([ -n "$deviceinfo_kernel_apply_overlay" ] && $deviceinfo_kernel_apply_overlay) || [ -n "$deviceinfo_dtbo" ]; then
         [ -d libufdt ] || git clone https://android.googlesource.com/platform/system/libufdt -b pie-gsi --depth 1
         [ -d dtc ] || git clone https://android.googlesource.com/platform/external/dtc -b pie-gsi --depth 1
