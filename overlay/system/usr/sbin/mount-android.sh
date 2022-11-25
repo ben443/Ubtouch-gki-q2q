@@ -129,8 +129,8 @@ cat ${fstab} | while read line; do
     ([ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]) && continue
     ([ "$2" = "/system" ] || [ "$2" = "/data" ] || [ "$2" = "/" ] \
     || [ "$2" = "auto" ] || [ "$2" = "/vendor" ] || [ "$2" = "none" ] \
-    || [ "$2" = "/misc" ] || [ "$2" = "/product" ] \
-	|| [[ "$1" = "/dev/block/bootdevice/by-name/modem" && "$2" = "/vendor/firmware_mnt" ]]) && continue
+	|| [ "$2" = "/misc" ] || [ "$2" = "/product" ]) && continue
+	([[ "$1" = "/dev/block/bootdevice/by-name/modem" && "$2" = "/vendor/firmware_mnt" ]]) && continue
     ([ "$3" = "emmc" ] || [ "$3" = "swap" ] || [ "$3" = "mtd" ]) && continue
 
     label=$(echo $1 | awk -F/ '{print $NF}')
