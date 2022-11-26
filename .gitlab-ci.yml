@@ -60,6 +60,7 @@ devel-flashable-gsi:
   script:
     - apt update
     - apt install -y git img2simg jq sudo wget xz-utils qemu-user-static qemu-system-arm e2fsprogs simg2img
+    - mkdir -p out/
     - wget https://ci.ubports.com/job/xenial-hybris-android9-android11-rootfs-arm64/lastSuccessfulBuild/artifact/ubuntu-touch-android9-arm64.tar.gz
     - wget https://ci.ubports.com/job/UBportsCommunityPortsJenkinsCI/job/ubports%252Fporting%252Fcommunity-ports%252Fjenkins-ci%252Fgeneric_arm64/job/main/lastSuccessfulBuild/artifact/halium_halium_arm64.tar.xz
     - tar xf halium_halium_arm64.tar.xz
