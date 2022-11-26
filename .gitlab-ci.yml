@@ -11,9 +11,9 @@ build:
     - cd out && tar xf device_q2q.tar.xz && rm device_q2q.tar.xz && cd ..
     - git clone https://github.com/draekko/AIK-Linux
     - cd AIK-Linux
-    - ./unpackimg.sh ../out/partitions/boot.img
+    - TERM=xterm ./unpackimg.sh ../out/partitions/boot.img
     - cp -r ../ramdisk-overlay/* ramdisk/
-    - ./repackimg.sh
+    - TERM=xterm ./repackimg.sh
     - cp image-new.img ../out/partitions/boot.img
     - cd ../out/ && tar czf device_q2q.tar.xz partitons system
     - rm -rf partitons system
