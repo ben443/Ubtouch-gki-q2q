@@ -1,0 +1,15 @@
+diff --git a/functions/core.sh b/functions/core.sh
+index 9ce5400..9afed34 100644
+--- a/functions/core.sh
++++ b/functions/core.sh
+@@ -74,6 +74,10 @@ function flash_img() {
+ 		echo "I:    Renaming to system-as-root compatible system image"
+ 		adb shell "mv /data/system.img /data/android-rootfs.img"
+ 	fi
++
++	mv "$IMAGE_DIR/system.img" "$IMAGE_DIR/android-rootfs.img"
++	cp "$IMAGE_DIR/android-rootfs.img" $(pwd)
++	cp "$IMAGE_DIR/rootfs.img" $(pwd)
+ }
+ 
+ function flash_dir() {
