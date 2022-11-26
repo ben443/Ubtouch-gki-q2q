@@ -8,12 +8,15 @@ build:
     - ln -sf python2.7 /usr/bin/python
     - wget https://raw.githubusercontent.com/LineageOS/android_system_tools_mkbootimg/lineage-19.1/mkbootimg.py -O /usr/bin/mkbootimg
     - ./build/build.sh
+    - cd out && tar xf device_q2q.tar.xz && rm device_q2q.tar.xz && cd ..
     - git clone https://github.com/draekko/AIK-Linux
     - cd AIK-Linux
-    - ./unpackimg.sh ../out/boot.img
+    - ./unpackimg.sh ../out/partitions/boot.img
     - cp -r ../ramdisk-overlay/* ramdisk/
     - ./repackimg.sh
-    - cp image-new.img ../out/boot.img
+    - cp image-new.img ../out/partitions/boot.img
+    - cd ../out/ && tar czf device_q2q.tar.xz partitons system
+    - rm -rf partitons system
   tags:
     - x86_64
   artifacts:
@@ -60,7 +63,8 @@ devel-flashable-gsi:
   script:
     - apt update
     - apt install -y git img2simg jq sudo wget xz-utils qemu-user-static qemu-system-arm e2fsprogs simg2img
-    - mkdir -p out/
+    - mkdir -p out
+    - cd out && tar xf device_q2q.tar.xz && mv partitions/boot.img . && cd ..
     - wget https://ci.ubports.com/job/xenial-hybris-android9-android11-rootfs-arm64/lastSuccessfulBuild/artifact/ubuntu-touch-android9-arm64.tar.gz
     - wget https://ci.ubports.com/job/UBportsCommunityPortsJenkinsCI/job/ubports%252Fporting%252Fcommunity-ports%252Fjenkins-ci%252Fgeneric_arm64/job/main/lastSuccessfulBuild/artifact/halium_halium_arm64.tar.xz
     - tar xf halium_halium_arm64.tar.xz
