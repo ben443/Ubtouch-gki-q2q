@@ -11,9 +11,9 @@ build:
     - cd out && tar xf device_q2q.tar.xz && rm device_q2q.tar.xz && cd ..
     - git clone https://github.com/draekko/AIK-Linux
     - cd AIK-Linux
-    - TERM=xterm ./unpackimg.sh ../out/partitions/boot.img
+    - TERM=linux ./unpackimg.sh ../out/partitions/boot.img
     - cp -r ../ramdisk-overlay/* ramdisk/
-    - TERM=xterm ./repackimg.sh
+    - TERM=linux ./repackimg.sh
     - cp image-new.img ../out/partitions/boot.img
     - cd ../out/ && tar czf device_q2q.tar.xz partitons system
     - rm -rf partitons system
@@ -65,14 +65,14 @@ devel-flashable-gsi:
     - apt install -y git img2simg jq sudo wget xz-utils qemu-user-static qemu-system-arm e2fsprogs simg2img
     - mkdir -p out
     - cd out && tar xf device_q2q.tar.xz && mv partitions/boot.img . && cd ..
-    - wget https://ci.ubports.com/job/xenial-hybris-android9-android11-rootfs-arm64/lastSuccessfulBuild/artifact/ubuntu-touch-android9-arm64.tar.gz
+    - wget https://ci.ubports.com/job/focal-hybris-rootfs-arm64/job/master/lastSuccessfulBuild/artifact/ubuntu-touch-hybris-rootfs-arm64.tar.gz
     - wget https://ci.ubports.com/job/UBportsCommunityPortsJenkinsCI/job/ubports%252Fporting%252Fcommunity-ports%252Fjenkins-ci%252Fgeneric_arm64/job/main/lastSuccessfulBuild/artifact/halium_halium_arm64.tar.xz
     - tar xf halium_halium_arm64.tar.xz
     - mv system/var/lib/lxc/android/android-rootfs.img .
     - git clone https://gitlab.com/JBBgameich/halium-install
     - cd halium-install
     - git apply ../patches/halium_install.patch
-    - ./halium-install -p ut -s ../ubuntu-touch-android9-arm64.tar.gz ../android-rootfs.img || true
+    - ./halium-install -p ut20.04 -s ../ubuntu-touch-hybris-rootfs-arm64.tar.gz ../android-rootfs.img || true
     - cp rootfs.img android-rootfs.img ../out/
     - mount ../out/rootfs.img /mnt
     - cp -r ../overlay/system/* /mnt/
