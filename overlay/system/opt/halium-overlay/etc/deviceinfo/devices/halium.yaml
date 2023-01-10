@@ -1,6 +1,5 @@
 q2q:
-  Names:
-    - q2q
+  Vendor: Samsung
   PrettyName: Z Fold 3
   DeviceType: tablet
   SupportedOrientations:
@@ -9,3 +8,7 @@ q2q:
     - Landscape
     - InvertedLandscape
   PrimaryOrientation: Landscape
+  MirAndroidPlatformServerFlipWidthAndHeight:
+    - true
+  LomiriInteractiveBlur:
+    - true
