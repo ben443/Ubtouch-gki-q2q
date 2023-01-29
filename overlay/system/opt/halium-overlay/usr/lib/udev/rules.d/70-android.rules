@@ -275,3 +275,7 @@ ACTION=="add", KERNEL=="kmsg", OWNER="root", GROUP="system", MODE="0620"
 ACTION=="add", KERNEL=="iio:device*", OWNER="system", GROUP="system", MODE="0660"
 ACTION=="add", KERNEL=="msm_npu", OWNER="system", GROUP="system", MODE="0644"
 ACTION=="add", KERNEL=="als_rear", OWNER="system", GROUP="system", MODE="0600"
+
+# Touchscreen rule
+SUBSYSTEM=="input", ATTRS{name}=="sec_touchscreen", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1", ENV{LIBINPUT_CALIBRATION_MATRIX}="0 1 0 -1 0 1"
+SUBSYSTEM=="input", ATTRS{name}=="sec_touchscreen2", ENV{ID_INPUT}="0", ENV{LIBINPUT_IGNORE_DEVICE}="1"

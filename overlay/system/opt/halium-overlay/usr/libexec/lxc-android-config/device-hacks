@@ -1,1 +1,32 @@
 setprop ctl.stop audioadsprpcd
+
+# Audio hack
+mount -o bind /system/lib64/hw/audio.hidl_compat.default.so /vendor/lib64/hw/audio.primary.default.so
+
+# hide fuelgauge and sec-direct-charger
+mount -o ro -t tmpfs tmpfs /sys/class/power_supply/max77705-fuelgauge
+mount -o ro -t tmpfs tmpfs /sys/class/power_supply/sec-direct-charger
+
+# IPA Firmware load
+if [ ! -e /dev/ipa ]; then exit 0; fi
+while ! mountpoint -q -- /vendor; do sleep 1; done
+if [ -f /vendor/firmware/ipa_fws.mdt ]; then echo 1 > /dev/ipa; fi
+
+# WiFi load
+if [ -f /usr/bin/getprop ]; then
+    # Wait for the property system to be up.
+    while [ ! -e /dev/socket/property_service ]; do sleep 0.5; done
+
+    # Wait for properties to be loaded.
+    while [ "$(getprop init.svc.vendor.wifi_hal_legacy)" != "running" ]; do sleep 0.5; done
+fi
+
+# Initialize qcacld wlan module via writing ON to /dev/wlan
+while [ ! -e /dev/wlan ]; do sleep 1; done
+echo ON > /dev/wlan
+
+# Enable WoWLAN to stay connected during suspend
+while [ ! -e /sys/class/ieee80211/phy0 ]; do sleep 1; done
+iw phy phy0 wowlan enable any
+
+exec /usr/lib/aarch64-linux-gnu/urfkill/urfkilld

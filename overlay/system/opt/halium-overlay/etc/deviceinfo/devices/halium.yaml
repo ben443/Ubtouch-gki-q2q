@@ -7,6 +7,6 @@ q2q:
     - InvertedPortrait
     - Landscape
     - InvertedLandscape
-  PrimaryOrientation: Landscape
+  PrimaryOrientation: InvertedPortrait
   LomiriInteractiveBlur:
     - true
