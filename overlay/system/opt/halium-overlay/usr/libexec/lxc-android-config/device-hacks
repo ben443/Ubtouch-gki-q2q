@@ -1,3 +1,8 @@
+# While the time_daemon binary has been overlayed by a non-executable, Android
+# init will continue trying to restart that service. Stop the cycle by
+# explicitly tell it to stop.
+setprop ctl.stop time_daemon
+
 # Audio hack
 mount -o bind /system/lib64/hw/audio.hidl_compat.default.so /vendor/lib64/hw/audio.primary.default.so
 
@@ -15,19 +20,7 @@ echo 1 > /dev/wcnss_wlan
 sleep 0.2
 
 echo 1 > /dev/wcnss_ctrl
-sleep 0.2
+sleep 20
 
-while [ ! -e /dev/ipa ]; do sleep 0.2; done
+echo ON > /dev/wlan
 echo 1 > /dev/ipa
-
-# Copy xdg desktop file to enable wlan late
-#if [ ! -f /etc/xdg/autostart/wlan.desktop ]; then
-#    mount -o remount,rw /
-#    cp /opt/halium-overlay/etc/xdg/autostart/wlan.desktop /etc/xdg/autostart/wlan.desktop
-#    mount -o remount,ro /
-#fi
-
-# While the time_daemon binary has been overlayed by a non-executable, Android
-# init will continue trying to restart that service. Stop the cycle by
-# explicitly tell it to stop.
-setprop ctl.stop time_daemon
