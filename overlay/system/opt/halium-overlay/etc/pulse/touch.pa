@@ -43,9 +43,12 @@ load-module module-null-sink sink_name=sink.fake.sco rate=8000 channels=1
 load-module module-null-source source_name=source.fake.sco rate=8000 channels=1
 
 ### Automatically load the Pulseaudio Droid
-.ifexists module-droid-discover.so
-#load-module module-droid-discover voice_virtual_stream=true hidl_args='helper=false'
-load-module module-droid-discover rate=48000 quirks=+unload_call_exit
+.ifexists module-droid-card-30.so
+load-module module-droid-card-30 rate=48000 quirks=+unload_call_exit # voice_virtual_stream=true use_legacy_stream_set_parameters=true
+.endif
+
+.ifexists module-droid-hidl-30.so
+load-module module-droid-hidl-30
 .endif
 
 ### Automatically load the trust-store module
@@ -137,8 +140,3 @@ load-module module-dbus-protocol
 ### loading modules and rerouting streams.
 load-module module-filter-heuristics
 load-module module-filter-apply
-
-### Automatically load the audioflinger glue
-.ifexists module-droid-glue-30.so
-load-module module-droid-glue-30
-.endif
