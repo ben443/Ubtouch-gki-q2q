@@ -20,7 +20,10 @@ echo 1 > /dev/wcnss_wlan
 sleep 0.2
 
 echo 1 > /dev/wcnss_ctrl
-sleep 20
+sleep 5
 
 echo ON > /dev/wlan
 echo 1 > /dev/ipa
+
+sleep 5
+systemctl restart bluetooth
