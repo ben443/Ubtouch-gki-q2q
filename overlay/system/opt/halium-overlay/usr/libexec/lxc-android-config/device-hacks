@@ -11,7 +11,7 @@ mount -o ro -t tmpfs tmpfs /sys/class/power_supply/max77705-fuelgauge
 mount -o ro -t tmpfs tmpfs /sys/class/power_supply/sec-direct-charger
 
 # WiFi: Wait for the property system to be up.
-while [ ! -e /dev/socket/property_service ]; do sleep 0.5; done
+while [ ! -e /dev/socket/property_service ]; do sleep 0.2; done
 
 echo 1 > /sys/kernel/icnss/wpss_boot
 sleep 0.2
@@ -20,10 +20,10 @@ echo 1 > /dev/wcnss_wlan
 sleep 0.2
 
 echo 1 > /dev/wcnss_ctrl
-sleep 5
+sleep 2
 
 echo ON > /dev/wlan
 echo 1 > /dev/ipa
 
-sleep 5
+sleep 3
 systemctl restart bluetooth
