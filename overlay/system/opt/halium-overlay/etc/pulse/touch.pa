@@ -44,7 +44,7 @@ load-module module-null-source source_name=source.fake.sco rate=8000 channels=1
 
 ### Automatically load the Pulseaudio Droid
 .ifexists module-droid-card-30.so
-load-module module-droid-card-30 rate=48000 quirks=+unload_call_exit # voice_virtual_stream=true use_legacy_stream_set_parameters=true
+load-module module-droid-card-30 rate=48000 use_legacy_stream_set_parameters=true
 .endif
 
 .ifexists module-droid-hidl-30.so

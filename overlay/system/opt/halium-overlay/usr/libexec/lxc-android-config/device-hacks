@@ -12,18 +12,11 @@ mount -o ro -t tmpfs tmpfs /sys/class/power_supply/sec-direct-charger
 
 # WiFi: Wait for the property system to be up.
 while [ ! -e /dev/socket/property_service ]; do sleep 0.2; done
-
-echo 1 > /sys/kernel/icnss/wpss_boot
-sleep 0.2
-
-echo 1 > /dev/wcnss_wlan
-sleep 0.2
-
-echo 1 > /dev/wcnss_ctrl
-sleep 2
-
+echo 1 > /sys/kernel/icnss/wpss_boot; sleep 0.2
+echo 1 > /dev/wcnss_wlan; sleep 0.2
+echo 1 > /dev/wcnss_ctrl; sleep 3
 echo ON > /dev/wlan
-echo 1 > /dev/ipa
+echo 1 > /dev/ipa; sleep 3
 
-sleep 3
+# Bluetooth bringup
 systemctl restart bluetooth
