@@ -3,9 +3,6 @@
 # explicitly tell it to stop.
 setprop ctl.stop time_daemon
 
-# Audio hack
-mount -o bind /system/lib64/hw/audio.hidl_compat.default.so /vendor/lib64/hw/audio.primary.default.so
-
 # hide fuelgauge and sec-direct-charger
 mount -o ro -t tmpfs tmpfs /sys/class/power_supply/max77705-fuelgauge
 mount -o ro -t tmpfs tmpfs /sys/class/power_supply/sec-direct-charger
@@ -16,7 +13,10 @@ echo 1 > /sys/kernel/icnss/wpss_boot; sleep 0.2
 echo 1 > /dev/wcnss_wlan; sleep 0.2
 echo 1 > /dev/wcnss_ctrl; sleep 3
 echo ON > /dev/wlan
-echo 1 > /dev/ipa; sleep 3
+echo 1 > /dev/ipa; sleep 6
 
 # Bluetooth bringup
 systemctl restart bluetooth
+
+# Audio hack
+mount -o bind /system/lib64/hw/audio.hidl_compat.default.so /vendor/lib64/hw/audio.primary.default.so
