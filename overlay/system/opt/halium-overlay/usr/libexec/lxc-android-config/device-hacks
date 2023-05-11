@@ -4,8 +4,9 @@
 setprop ctl.stop time_daemon
 
 # hide fuelgauge and sec-direct-charger
-mount -o ro -t tmpfs tmpfs /sys/class/power_supply/max77705-fuelgauge
-mount -o ro -t tmpfs tmpfs /sys/class/power_supply/sec-direct-charger
+mount -o ro -t tmpfs tmpfs /sys/class/power_supply/s2asl01-limiter-main
+mount -o ro -t tmpfs tmpfs /sys/class/power_supply/s2asl01-limiter-sub
+mount -o ro -t tmpfs tmpfs /sys/class/power_supply/sec-dual-battery
 
 # WiFi: Wait for the property system to be up.
 while [ ! -e /dev/socket/property_service ]; do sleep 0.1; done
