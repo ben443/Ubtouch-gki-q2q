@@ -1,4 +1,6 @@
 .*.swp
 out/
 ota/
-android-kernel/
+tmp/
+build/
+downloads/
