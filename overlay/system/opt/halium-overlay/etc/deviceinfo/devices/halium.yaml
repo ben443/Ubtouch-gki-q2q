@@ -11,3 +11,5 @@ q2q:
     - InvertedPortrait
   LomiriInteractiveBlur:
     - true
+  Foldable: /sys/devices/virtual/sec/hall_ic/flip_status
+  BacklightSysfsPath: /sys/class/backlight/panel0-backlight
