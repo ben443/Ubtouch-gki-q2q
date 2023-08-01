@@ -1,14 +1,3 @@
-for part in "/efs" "/optics" "/prism"; do
-        if [ ! -e $part ]; then
-                mount -o remount,rw /
-                mkdir -p $part
-                mount -o remount,ro /
-        fi
-
-        if [ $part != "/efs" ]; then mount /dev/disk/by-partlabel/$part /$part
-        else mount /dev/disk/by-partlabel/sec_efs /efs; fi
-done
-
 # While the time_daemon binary has been overlayed by a non-executable, Android
 # init will continue trying to restart that service. Stop the cycle by
 # explicitly tell it to stop.
@@ -19,11 +8,23 @@ mount -o ro -t tmpfs tmpfs /sys/class/power_supply/s2asl01-limiter-main
 mount -o ro -t tmpfs tmpfs /sys/class/power_supply/s2asl01-limiter-sub
 mount -o ro -t tmpfs tmpfs /sys/class/power_supply/sec-dual-battery
 
+mount -o ro -t tmpfs tmpfs /sys/class/backlight/panel
+mount -o ro -t tmpfs tmpfs /sys/class/backlight/panel1
+mount -o ro -t tmpfs tmpfs /sys/class/backlight/panel1-backlight
+
+for part in "/efs" "/optics" "/prism"; do
+	if [ ! -e $part ]; then
+		mount -o remount,rw /
+		mkdir -p $part
+		mount -o remount,ro /
+	fi
+
+	if [ $part != "/efs" ]; then mount /dev/disk/by-partlabel/$part /$part
+	else mount /dev/disk/by-partlabel/sec_efs /efs; fi
+done
+
 # WiFi: Wait for the property system to be up.
 while [ ! -e /dev/socket/property_service ]; do sleep 0.1; done
-
-# Wait for the property system to be up.
-while [ ! -e /dev/socket/property_service ]; do sleep 0.5; done
 
 # Wait for properties to be loaded.
 while [ "$(getprop init.svc.vendor.wifi_hal_legacy)" != "running" ]; do sleep 0.5; done
@@ -43,6 +44,3 @@ iw phy phy0 wowlan enable any
 
 # Bluetooth bringup
 systemctl restart bluetooth
-
-# Audio hack
-mount -o bind /system/lib64/hw/audio.hidl_compat.default.so /vendor/lib64/hw/audio.primary.default.so
