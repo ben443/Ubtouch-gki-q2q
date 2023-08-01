@@ -14,8 +14,6 @@ q2q:
   Foldable:
     - /sys/devices/virtual/sec/hall_ic/flip_status
   BacklightSysfsPath:
-    - /sys/devices/platform/soc/ae00000.qcom,mdss_mdp/backlight/panel0-backlight
+    - /sys/class/backlight/panel0-backlight
   FlashlightSysfsPath:
     - /sys/class/leds/torch-sec1/brightness
-  FlashlightSwitchPath:
-    - /sys/class/leds/leds-sec1/brightness
