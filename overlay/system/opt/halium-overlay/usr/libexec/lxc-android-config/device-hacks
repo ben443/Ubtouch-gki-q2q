@@ -8,27 +8,18 @@ mount -o ro -t tmpfs tmpfs /sys/class/power_supply/s2asl01-limiter-main
 mount -o ro -t tmpfs tmpfs /sys/class/power_supply/s2asl01-limiter-sub
 mount -o ro -t tmpfs tmpfs /sys/class/power_supply/sec-dual-battery
 
+# HACK: hide outer panel backlight sysfs
 mount -o ro -t tmpfs tmpfs /sys/class/backlight/panel
 mount -o ro -t tmpfs tmpfs /sys/class/backlight/panel1
 mount -o ro -t tmpfs tmpfs /sys/class/backlight/panel1-backlight
 
 # WiFi: Wait for the property system to be up.
-while [ ! -e /dev/socket/property_service ]; do sleep 0.1; done
-
-# Wait for properties to be loaded.
-while [ "$(getprop init.svc.vendor.wifi_hal_legacy)" != "running" ]; do sleep 0.5; done
-
-echo 1 > /dev/wcnss_wlan; sleep 0.2
-echo 1 > /dev/wcnss_ctrl; sleep 3
+while [ ! -e /dev/socket/property_service ]; do sleep 0.2; done
+while [ "$(getprop init.svc.vendor.wifi_hal_legacy)" != "running" ]; do sleep 0.2; done
 echo 1 > /dev/ipa
 
-# Initialize qcacld wlan module via writing ON to /dev/wlan
 while [ ! -e /dev/wlan ]; do sleep 1; done
 echo ON > /dev/wlan; sleep 6
-
-# Enable WoWLAN to stay connected during suspend
-while [ ! -e /sys/class/ieee80211/phy0 ]; do sleep 1; done
-iw phy phy0 wowlan enable any
 
 # Bluetooth bringup
 systemctl restart bluetooth
