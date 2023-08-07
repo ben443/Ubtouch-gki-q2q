@@ -12,24 +12,12 @@ mount -o ro -t tmpfs tmpfs /sys/class/backlight/panel
 mount -o ro -t tmpfs tmpfs /sys/class/backlight/panel1
 mount -o ro -t tmpfs tmpfs /sys/class/backlight/panel1-backlight
 
-for part in "/efs" "/optics" "/prism"; do
-	if [ ! -e $part ]; then
-		mount -o remount,rw /
-		mkdir -p $part
-		mount -o remount,ro /
-	fi
-
-	if [ $part != "/efs" ]; then mount /dev/disk/by-partlabel/$part /$part
-	else mount /dev/disk/by-partlabel/sec_efs /efs; fi
-done
-
 # WiFi: Wait for the property system to be up.
 while [ ! -e /dev/socket/property_service ]; do sleep 0.1; done
 
 # Wait for properties to be loaded.
 while [ "$(getprop init.svc.vendor.wifi_hal_legacy)" != "running" ]; do sleep 0.5; done
 
-echo 1 > /sys/kernel/icnss/wpss_boot; sleep 0.2
 echo 1 > /dev/wcnss_wlan; sleep 0.2
 echo 1 > /dev/wcnss_ctrl; sleep 3
 echo 1 > /dev/ipa
