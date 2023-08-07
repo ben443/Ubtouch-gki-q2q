@@ -556,7 +556,6 @@ mountroot() {
 
 		# create symlinks
 		ln -s /android/efs /halium-system/efs
-		ln -s /android/vendor/etc/wifi /halium-system/etc/wifi
 	else
 		umount /halium-system
 	fi
