@@ -666,7 +666,12 @@ mountroot() {
 		[ $ANDROID_IMAGE_MODE = "rootfs" ] && mount -o bind ${rootmnt}/var/lib/lxc/android/rootfs ${rootmnt}/android
 
 		# Mount extra partition
-		mount_extra /dev/sda9 efs
+		if [ ! -e ${rootmnt}/userdata/efs ]; then
+			mount_extra /dev/sda9 efs
+			cp -a ${rootmnt}/android/efs ${rootmnt}/userdata/efs
+			umount ${rootmnt}/android/efs
+		fi
+		mount -o bind ${rootmnt}/userdata/efs ${rootmnt}/android/efs
 		mount_extra /dev/sda27 prism
 		mount_extra /dev/sda35 keyrefuge
 		mount_extra /dev/sda28 optics
