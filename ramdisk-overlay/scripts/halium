@@ -559,7 +559,8 @@ mountroot() {
 			/halium-system/prism \
 			/halium-system/keyrefuge \
 			/halium-system/optics \
-			/halium-system/spu
+			/halium-system/spu \
+			/halium-system/omr
 		
 		touch /halium-system/.init_done
 		umount /halium-system
@@ -570,6 +571,7 @@ mountroot() {
 		ln -s /android/keyrefuge /halium-system/keyrefuge
 		ln -s /android/optics /halium-system/optics
 		ln -s /android/spu /halium-system/spu
+		ln -s /android/omr /halium-system/omr
 	else
 		umount /halium-system
 	fi
@@ -669,6 +671,7 @@ mountroot() {
 		mount_extra /dev/sda35 keyrefuge
 		mount_extra /dev/sda28 optics
 		mount_extra /dev/sda31 spu
+		mount_extra /dev/sda30 omr
 
 		mkdir -p ${rootmnt}/android/data ${rootmnt}/android/system
 
