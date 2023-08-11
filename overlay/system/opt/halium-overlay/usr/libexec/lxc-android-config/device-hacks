@@ -3,6 +3,9 @@
 # explicitly tell it to stop.
 setprop ctl.stop time_daemon
 
+# Fix Flashlight permission
+chown phablet /sys/class/leds/torch-sec1/brightness
+
 # hide fuelgauge and sec-direct-charger
 mount -o ro -t tmpfs tmpfs /sys/class/power_supply/s2asl01-limiter-main
 mount -o ro -t tmpfs tmpfs /sys/class/power_supply/s2asl01-limiter-sub
