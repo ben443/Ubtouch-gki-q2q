@@ -258,4 +258,6 @@ ACTION=="add", KERNEL=="als_rear", OWNER="system", GROUP="system", MODE="0600"
 
 # Touchscreen rule
 SUBSYSTEM=="input", ATTRS{name}=="sec_touchscreen", ENV{ID_INPUT}="1", ENV{ID_INPUT_TOUCHSCREEN}="1", ENV{LIBINPUT_CALIBRATION_MATRIX}="0 1 0 -1 0 1"
-SUBSYSTEM=="input", ATTRS{name}=="sec_touchscreen2", ENV{ID_INPUT}="0", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+
+SUBSYSTEM=="sec", ACTION=="change", KERNEL=="hall_ic", ATTR{flip_status}=="0", RUN+="/opt/halium-overlay/usr/bin/swap_screen"
+SUBSYSTEM=="sec", ACTION=="change", KERNEL=="hall_ic", ATTR{flip_status}=="1", RUN+="/opt/halium-overlay/usr/bin/swap_screen"

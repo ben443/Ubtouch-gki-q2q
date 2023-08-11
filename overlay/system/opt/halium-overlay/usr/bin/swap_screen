@@ -1,0 +1,23 @@
+#!/bin/bash
+while [ ! -e /sys/class/sec/hall_ic/flip_status ]; do sleep 1; done
+if [ $(cat /sys/class/sec/hall_ic/flip_status) = 1 ]; then
+        while [[ ! $(cat /sys/class/sec/tsp2/cmd_result) =~ 'module_off_master' ]]; do
+                echo module_off_master > /sys/class/sec/tsp2/cmd
+                sleep 1
+        done
+
+        while [[ ! $(cat /sys/class/sec/tsp1/cmd_result) =~ 'module_on_master' ]]; do
+                echo module_on_master > /sys/class/sec/tsp1/cmd
+                sleep 1
+        done
+else
+        while [[ ! $(cat /sys/class/sec/tsp1/cmd_result) =~ 'module_off_master' ]]; do
+                echo module_off_master > /sys/class/sec/tsp1/cmd
+                sleep 1
+        done
+
+        while [[ ! $(cat /sys/class/sec/tsp2/cmd_result) =~ 'module_on_master' ]]; do
+                echo module_on_master > /sys/class/sec/tsp2/cmd
+                sleep 1
+        done
+fi
